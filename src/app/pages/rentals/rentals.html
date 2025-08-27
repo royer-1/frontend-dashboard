@@ -1,0 +1,147 @@
+
+<div class="card">
+   <div class="font-semibold text-xl mb-4">ALQUILERES</div>
+   <p-table
+      #dt
+      [value]="rental"
+      [rows]="10"
+      
+      [paginator]="true"
+      [globalFilterFields]="['nombre', 'apellidos', 'nombre_auditorio', 'orden_pago']"
+      [(selection)]="selectedRentals"
+      [showGridlines]="true"
+      [rowHover]="true"
+      dataKey="id"
+      currentPageReportTemplate="Mostrando del {first} al {last} de {totalRecords} Alquileres"
+      [showCurrentPageReport]="true"
+      [rowsPerPageOptions]="[10, 20, 30]"
+      responsiveLayout="scroll"
+   >
+      <ng-template #caption>
+         <div class="flex justify-between items-center flex-column sm:flex-row py-2">
+            <p-toolbar class="toolbar">
+               <ng-template #start>
+                  <p-button label="Nuevo" icon="pi pi-plus" severity="secondary" class="mr-2" (onClick)="addRentals()" />
+                  <p-dialog header="Agregar Alquileres" [modal]="true" [(visible)]="visible" [style]="{ width: '500px' } " [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" >
+                     <app-addrentals></app-addrentals>
+                  </p-dialog>
+                  <p-button severity="secondary" label="Borrar" icon="pi pi-trash" class="mr-2"  outlined (onClick)="deleteSelectedRentals()" />
+                  <app-export-csv></app-export-csv>
+               </ng-template>
+            </p-toolbar>
+            <app-table-search-bar-component></app-table-search-bar-component>
+         </div>
+      </ng-template>
+
+      <ng-template #header>
+         <tr>
+            <th style="width: 3rem">
+               <p-tableHeaderCheckbox />
+            </th>
+            <th style="min-width: 12rem">
+               <div class="flex justify-between items-center">
+                  Nombre
+                  <p-columnFilter type="text" field="nombre" matchMode="contains" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" display="menu" placeholder="Buscar por Nombre"></p-columnFilter>
+               </div>
+            </th>
+            <th style="min-width: 12rem">
+               <div class="flex justify-between items-center">
+                  Apellido
+                  <p-columnFilter type="text" field="apellidos" matchMode="contains" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" display="menu" placeholder="Buscar por Apellido"></p-columnFilter>
+               </div>
+            </th>
+            <th style="min-width: 12rem">
+               <div class="flex justify-between items-center">
+                  Nombre de Inmueble
+                  <p-columnFilter type="text" field="nombre_auditorio" matchMode="contains" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" display="menu" placeholder="Buscar por Inmueble"></p-columnFilter>
+               </div>
+            </th>
+            <th style="min-width: 10rem">
+               <div class="flex justify-between items-center">
+                  Fecha de Inicio
+                  <p-columnFilter type="date" field="fecha_inicio" display="menu" [showOperator]="false" placeholder="mm/dd/yyyy"></p-columnFilter>
+               </div>
+            </th>
+            <th style="min-width: 10rem">
+               <div class="flex justify-between items-center">
+                  Fecha Final
+                  <p-columnFilter type="date" field="fecha_final" display="menu" [showOperator]="false" placeholder="mm/dd/yyyy"></p-columnFilter>
+               </div>
+            </th>
+            <th style="min-width: 12rem">
+               <div class="flex justify-between items-center">
+                  Importe de Pago
+                  <p-columnFilter type="text" field="importe_pago" matchMode="contains" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" display="menu" placeholder="Buscar por importe"></p-columnFilter>
+               </div>
+            </th>
+            <th style="min-width: 12rem">
+               <div class="flex justify-between items-center">
+                  Comprobante de Pago
+                  <p-columnFilter type="text" field="comprobante_pago" matchMode="contains" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" display="menu" placeholder="Buscar por comprobante"></p-columnFilter>
+               </div>
+            </th>
+            <th style="min-width: 12rem">
+               <div class="flex justify-between items-center">
+                  Fceha de Comprobante
+                  <p-columnFilter type="text" field="fecha_comprobante" matchMode="contains" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" display="menu" placeholder="Buscar por fecha comprobante"></p-columnFilter>
+               </div>
+            </th>
+            <th style="min-width: 12rem">
+               <div class="flex justify-between items-center">
+                  Orden de Pago
+                  <p-columnFilter type="text" field="orden_pago" matchMode="contains" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" display="menu" placeholder="Buscar por orden de pago"></p-columnFilter>
+               </div>
+            </th>
+            <th style="min-width: 12rem">
+               <div class="flex justify-between items-center">
+                  Fecha de Orden
+                  <p-columnFilter type="text" field="fecha_orden" matchMode="contains" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" display="menu" placeholder="Buscar por fecha de orden"></p-columnFilter>
+               </div>
+            </th>
+            <th style="min-width: 10rem"></th>
+         </tr>
+      </ng-template>
+      <ng-template #body let-rental>
+         <tr>
+            <td style="width: 3rem">
+               <p-tableCheckbox [value]="rental" />
+            </td>
+            <td>
+               {{ rental.nombre }}
+            </td>
+            <td>
+               {{ rental.apellidos }}
+            </td>
+            <td>
+               {{ rental.nombre_auditorio }}
+            </td>
+            <td>
+               {{ rental.fecha_inicio }}
+            </td>
+            <td>
+               {{ rental.fecha_final }}
+            </td>
+            <td>
+               {{ rental.importe_pago }}
+            </td>
+            <td>
+               {{ rental.comprobante_pago }}
+            </td>
+            <td>
+               {{ rental.fecha_comprobante }}
+            </td>
+            <td>
+               {{ rental.orden_pago }}
+            </td>
+            <td>
+               {{ rental.fecha_orden }}
+            </td>
+            <td class="flex flex-row justify-center gap-2">
+               <p-button icon="pi pi-pencil" [rounded]="true" [outlined]="true" />
+               <p-button icon="pi pi-trash" severity="danger" [rounded]="true" [outlined]="true" (click)="deleteRental(rental)"/>
+            </td>
+         </tr>
+      </ng-template>
+   </p-table>
+</div>
+   

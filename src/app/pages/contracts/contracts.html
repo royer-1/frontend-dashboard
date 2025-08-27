@@ -1,0 +1,152 @@
+<div class="card">
+   <div class="font-semibold text-xl mb-4">CONTRATOS</div>
+   <p-table
+      #dt
+      [value]="contract"
+      [rows]="10"
+      
+      [paginator]="true"
+      [globalFilterFields]="['nombre', 'apellidos', 'nombre_inmueble', 'estado']"
+      [(selection)]="selectedContracts"
+      [showGridlines]="true"
+      [rowHover]="true"
+      dataKey="id"
+      currentPageReportTemplate="Mostrando del {first} al {last} de {totalRecords} Contratos"
+      [showCurrentPageReport]="true"
+      [rowsPerPageOptions]="[10, 20, 30]"
+      responsiveLayout="scroll"
+   >
+      <ng-template #caption>
+         <div class="flex justify-between items-center flex-column sm:flex-row py-2">
+            <p-toolbar class="toolbar">
+               <ng-template #start>
+                  <p-button label="Nuevo" icon="pi pi-plus" severity="secondary" class="mr-2" (onClick)="addContracts()" />
+                  <p-dialog header="Agregar Contrato" [modal]="true" [(visible)]="visible" [style]="{ width: '500px' } " [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" >
+                     <!-- <app-addrentals></app-addrentals> -->
+                  </p-dialog>
+                  <p-button severity="secondary" label="Borrar" icon="pi pi-trash" class="mr-2"  outlined (onClick)="deleteSelectedContracts()" />
+                  <app-export-csv></app-export-csv>
+               </ng-template>
+            </p-toolbar>
+            <app-table-search-bar-component></app-table-search-bar-component>
+         </div>
+      </ng-template>
+      <ng-template #header>
+         <tr>
+            <th style="width: 3rem">
+               <p-tableHeaderCheckbox />
+            </th>
+            <th style="min-width: 12rem">
+               <div class="flex justify-between items-center">
+                  Nombre
+                  <p-columnFilter type="text" field="nombre" matchMode="contains" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" display="menu" placeholder="Buscar por Nombres"></p-columnFilter>
+               </div>
+            </th>
+            <th style="min-width: 12rem">
+               <div class="flex justify-between items-center">
+                  Apellidos
+                  <p-columnFilter type="text" field="apellidos" matchMode="contains" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" display="menu" placeholder="Buscar por Apellidos"></p-columnFilter>
+               </div>
+            </th>
+            <th style="min-width: 12rem">
+               <div class="flex justify-between items-center">
+                  Nombre del Inmueble
+                  <p-columnFilter type="text" field="nombre_inmueble" matchMode="contains" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" display="menu" placeholder="Buscar por Inmueble"></p-columnFilter>
+               </div>
+            </th>
+            <th style="min-width: 12rem">
+               <div class="flex justify-between items-center">
+                  Numero de Contrato
+                  <p-columnFilter type="numeric" field="num_contrato" matchMode="contains" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" display="menu" placeholder="Buscar por Contrato"></p-columnFilter>
+               </div>
+            </th>
+            <th style="min-width: 12rem">
+               <div class="flex justify-between items-center">
+                  Fecha inicio
+                  <p-columnFilter type="date" field="fecha_inicio" display="menu" [showOperator]="false" placeholder="mm/dd/yyyy"></p-columnFilter>
+               </div>
+            </th>
+            <th style="min-width: 12rem">
+               <div class="flex justify-between items-center">
+                  Fecha final
+                  <p-columnFilter type="date" field="fecha_final" display="menu" [showOperator]="false" placeholder="mm/dd/yyyy"></p-columnFilter>
+               </div>
+            </th>
+             <th style="min-width: 12rem">
+               <div class="flex justify-between items-center">
+                  Monto de alquiler
+                  <p-columnFilter type="numeric" field="monto_alquiler" matchMode="contains" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" display="menu" currency="PEN"></p-columnFilter>
+               </div>
+            </th>
+            <th style="min-width: 12rem">
+               <div class="flex justify-between items-center">
+                  Monto de agua
+                  <p-columnFilter type="numeric" field="monto_agua" matchMode="contains" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" display="menu" currency="PEN"></p-columnFilter>
+               </div>
+            </th>
+            <th style="min-width: 12rem">
+               <div class="flex justify-between items-center">
+                  Monto de luz
+                  <p-columnFilter type="numeric" field="monto_luz" matchMode="contains" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" display="menu" currency="PEN"></p-columnFilter>
+               </div>
+            </th>
+            <th style="min-width: 12rem">
+               <div class="flex justify-between items-center">
+                  Estado
+                  <p-columnFilter type="numeric" field="estado" matchMode="contains" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" display="menu" placeholder="Buscar por Estado"></p-columnFilter>
+               </div>
+            </th>
+            <th style="min-width: 12rem">
+               <div class="flex justify-between items-center">
+                  Cronograma de pagos
+               </div>
+            </th>
+            <th style="min-width: 10rem"></th>
+         </tr>
+      </ng-template>
+      <ng-template #body let-contract>
+         <tr>
+            <td style="width: 3rem">
+               <p-tableCheckbox [value]="contract" />
+            </td>
+            <td>
+               {{ contract.nombre }}
+            </td>
+            <td>
+               {{ contract.apellidos }}
+            </td>
+            <td>
+               {{ contract.nombre_inmueble }}
+            </td>
+            <td>
+               {{ contract.num_contrato }}
+            </td>
+            <td>
+               {{ contract.fecha_inicio }}
+            </td>
+            <td>
+               {{ contract.fecha_final }}
+            </td>
+            <td>
+               {{ contract.monto_alquiler }}
+            </td>
+            <td>
+               {{ contract.monto_agua }}
+            </td>
+            <td>
+               {{ contract.monto_luz }}
+            </td>
+            <td>
+               {{ contract.estado }}
+            </td>
+            <td>
+               <p-button label="Cronograma" severity="info" />
+            </td>
+            <td class="flex flex-row justify-center gap-2">
+               <p-button icon="pi pi-pencil" [rounded]="true" [outlined]="true" />
+               <p-button icon="pi pi-trash" severity="danger" [rounded]="true" [outlined]="true" (click)="deleteContract()"/>
+            </td>
+         </tr>
+      </ng-template>
+   </p-table>
+</div>

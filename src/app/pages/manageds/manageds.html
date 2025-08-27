@@ -1,0 +1,149 @@
+<div class="card">
+   <div class="font-semibold text-xl mb-4">CLIENTES</div>
+   <p-table
+      #dt
+      [value]="managed"
+      [rows]="10"
+      
+      [paginator]="true"
+      [globalFilterFields]="['nombre', 'apellidos', 'nombre_inmueble', 'estado']"
+      [(selection)]="selectedManageds"
+      [showGridlines]="true"
+      [rowHover]="true"
+      dataKey="id"
+      currentPageReportTemplate="Mostrando del {first} al {last} de {totalRecords} Contratos"
+      [showCurrentPageReport]="true"
+      [rowsPerPageOptions]="[10, 20, 30]"
+      responsiveLayout="scroll"
+   >
+      <ng-template #caption>
+         <div class="flex justify-between items-center flex-column sm:flex-row py-2">
+            <p-toolbar class="toolbar">
+               <ng-template #start>
+                  <p-button label="Nuevo" icon="pi pi-plus" severity="secondary" class="mr-2" (onClick)="addManaged()" />
+                  <p-dialog header="Agregar Administrado" [modal]="true" [(visible)]="visibleAdd" [style]="{ width: '500px' } " [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" >
+                     <app-addmanageds></app-addmanageds>
+                  </p-dialog>
+                  <p-button severity="secondary" label="Borrar" icon="pi pi-trash" class="mr-2"  outlined (onClick)="deleteSelectedManaged()" />
+                  <app-export-csv></app-export-csv>
+               </ng-template>
+            </p-toolbar>
+            <app-table-search-bar-component></app-table-search-bar-component>
+         </div>
+      </ng-template>
+      <ng-template #header>
+         <tr>
+            <th style="width: 3rem">
+               <p-tableHeaderCheckbox />
+            </th>
+            <th style="min-width: 12rem">
+               <div class="flex justify-between items-center">
+                  Nombres
+                  <p-columnFilter type="text" field="nombres" matchMode="contains" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" display="menu" placeholder="Buscar por Nombres"></p-columnFilter>
+               </div>
+            </th>
+            <th style="min-width: 12rem">
+               <div class="flex justify-between items-center">
+                  Apellido Paterno
+                  <p-columnFilter type="text" field="apellido1" matchMode="contains" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" display="menu" placeholder="Buscar por Apellidos"></p-columnFilter>
+               </div>
+            </th>
+            <th style="min-width: 12rem">
+               <div class="flex justify-between items-center">
+                  Apellido Materno
+                  <p-columnFilter type="text" field="apellido2" matchMode="contains" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" display="menu" placeholder="Buscar por Apellidos"></p-columnFilter>
+               </div>
+            </th>
+            <th style="min-width: 12rem">
+               <div class="flex justify-between items-center">
+                  Tipo de Documento
+                  <p-columnFilter type="text" field="tipo_doc" matchMode="contains" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" display="menu" placeholder="Buscar por Tipo Documento"></p-columnFilter>
+               </div>
+            </th>
+            <th style="min-width: 12rem">
+               <div class="flex justify-between items-center">
+                  Documento
+                  <p-columnFilter type="text" field="numero_doc" matchMode="contains" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" display="menu" placeholder="Buscar por Documento"></p-columnFilter>
+               </div>
+            </th>
+            <th style="min-width: 12rem">
+               <div class="flex justify-between items-center">
+                  Razon Social
+                  <p-columnFilter type="text" field="razon_social" matchMode="contains" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" display="menu" placeholder="Buscar por Documento"></p-columnFilter>
+               </div>
+            </th>
+            <th style="min-width: 12rem">
+               <div class="flex justify-between items-center">
+                  Telefono
+                  <p-columnFilter type="numeric" field="telefono" matchMode="contains" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" display="menu" placeholder="Buscar por Telefono"></p-columnFilter>
+               </div>
+            </th>
+            <th style="min-width: 12rem">
+               <div class="flex justify-between items-center">
+                  Correo
+                  <p-columnFilter type="text" field="correo" matchMode="contains" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" display="menu" placeholder="Buscar por Correo"></p-columnFilter>
+               </div>
+            </th>
+            <th style="min-width: 12rem">
+               <div class="flex justify-between items-center">
+                  Dirección
+                  <p-columnFilter type="text" field="direccion" matchMode="contains" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" display="menu" placeholder="Buscar por Dirección"></p-columnFilter>
+               </div>
+            </th>
+            <th style="min-width: 12rem">
+               <div class="flex justify-between items-center">
+                  Ubigeo
+                  <p-columnFilter type="text" field="ubigeo" matchMode="contains" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" display="menu" placeholder="Buscar por Ubigeo"></p-columnFilter>
+               </div>
+            </th>
+            <th style="min-width: 10rem"></th>
+         </tr>
+      </ng-template>
+      <ng-template #body let-managed>
+         <tr>
+            <td style="width: 3rem">
+               <p-tableCheckbox [value]="managed" />
+            </td>
+            <td>
+               {{ managed.nombres }}
+            </td>
+            <td>
+               {{ managed.apellido1 }}
+            </td>
+            <td>
+               {{ managed.apellido2 }}
+            </td>
+            <td>
+               {{ managed.tipo_doc }}
+            </td>
+            <td>
+               {{ managed.numero_doc }}
+            </td>
+            <td>
+               {{ managed.razon_social }}
+            </td>
+            <td>
+               {{ managed.telefono }}
+            </td>
+            <td>
+               {{ managed.correo }}
+            </td>
+            <td>
+               {{ managed.direccion }}
+            </td>
+            <td>
+               {{ managed.ubigeo }}
+            </td>
+            <td class="flex flex-row items-center justify-center gap-2">
+               <!-- min-h-[80px] -->
+               <p-button icon="pi pi-pencil" [rounded]="true" severity="success" [outlined]="true" (click)="editManaged(managed)" />
+               <p-button icon="pi pi-trash" severity="danger" [rounded]="true" [outlined]="true" (click)="deleteManaged()"/>
+            </td>
+         </tr>
+      </ng-template>
+   </p-table>
+   <p-dialog header="Editar Administrado" [modal]="true" [(visible)]="visibleEdit" [style]="{ width: '500px' } " [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" >
+      <app-editmanageds [managed]="selectedManaged"></app-editmanageds>
+   </p-dialog> 
+</div>
+

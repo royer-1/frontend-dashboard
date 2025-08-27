@@ -1,0 +1,64 @@
+<div class="w-full h-full" *ngIf="property">
+  <div class="flex flex-col gap-6">
+    <div>
+      <img
+        [src]="property.imagen"
+        *ngIf="property.imagen && property.imagen.length"
+        class="block m-auto pb-4 w-full max-h-60 object-cover rounded"
+        [alt]="property.nombre"
+      />
+    </div>
+
+    <div class="flex flex-col grow basis-0 gap-2">
+      <label for="dimension" class="block font-bold mb-2">Nombre</label>
+      <input type="text" id="nombre" pInputText [(ngModel)]="property.nombre" />
+    </div>
+    
+    <div class="flex flex-col grow basis-0 gap-2">
+      <label for="description" class="block font-bold mb-2">Descripción</label>
+      <textarea id="description" pTextarea [(ngModel)]="property.descripcion" required rows="3" cols="20" fluid></textarea>
+    </div>
+
+    <div class="flex flex-col grow basis-0 gap-2">
+      <label for="dimension" class="block font-bold mb-2">Dimensión (m²)</label>
+      <input type="text" id="dimension" pInputText [(ngModel)]="property.area" />
+    </div>
+
+
+    <div class="flex flex-col grow basis-0 gap-2">
+      <label for="ciudad" class="block font-bold mb-2">Dirección</label>
+      <input type="text" id="direccion" pInputText [(ngModel)]="property.direccion"/>
+    </div>
+
+    <div class="flex flex-col grow basis-0 gap-2">
+      <label for="ciudad" class="block font-bold mb-2">Ubigeo</label>
+      <input type="text" id="ciudad" pInputText [(ngModel)]="property.ubigeo" />
+    </div>
+
+    <div class="flex flex-row justify-between gap-5">
+      <div class="flex flex-col w-full">
+        <label for="precio" class="block font-bold mb-2">Latitud</label>
+         <input type="text" id="ciudad" pInputText [(ngModel)]="property.latitud" />
+      </div>
+      <div class="flex flex-col w-full">
+        <label for="tiempo" class="block font-bold mb-2">Longitud</label>
+         <input type="text" id="ciudad" pInputText [(ngModel)]="property.longitud" />
+      </div>
+    </div>
+
+    <div class="flex items-center justify-end gap-4 mt-6">
+      <p-button label="Cancelar" severity="danger" icon="pi pi-times"  outlined/>
+      <p-button label="Guardar"  severity="success" icon="pi pi-check"  outlined/>
+   </div>
+  </div>
+</div>
+
+<!-- <div class="flex flex-col grow basis-0 gap-2">
+      <label for="tipoInmueble" class="block font-bold mb-2">Nombre</label>
+      <p-select
+        id="tipoInmueble"
+        [options]="tipoInmuebleOptions"
+        [(ngModel)]="property.tipoInmueble"
+        placeholder="Seleccione un tipo"
+      ></p-select>
+    </div> -->

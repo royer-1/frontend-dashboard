@@ -1,0 +1,38 @@
+<div class="flex flex-col gap-6">
+   <div class="flex flex-col grow basis-0 gap-2">
+      <label for="nombres" class="font-bold">Nombres</label>
+      <input type="text" pInputText id="nombres" required autofocus fluid />
+      <!-- <small class="text-red-500" *ngIf="submitted && !product.name">Name is required.</small> -->
+   </div>
+   <div class="flex flex-col grow basis-0 gap-2">
+      <label for="apellidos" class="font-bold">Apellidos</label>
+      <input type="text" pInputText id="apellidos"  required autofocus fluid />
+   </div>
+   <div class="flex flex-wrap gap-6">
+      <div #exampleForm (ngSubmit)="onSubmit(exampleForm)" class="flex flex-col grow basis-0 gap-2">
+         <label for="tipo_documento" class="font-bold">Tipo de Documento</label>
+         <p-select [(ngModel)]="cities" [options]="cities" optionLabel="name" placeholder="Tipo de Documento" />
+         <!-- <p-select #city="ngModel" [(ngModel)]="selectedCity" [options]="cities" [invalid]="city.invalid && (city.touched || cities)" optionLabel="name" placeholder="Tipo de Documento" class="w-full md:w-56" required />
+            @if (city.invalid && (city.touched || cities)) {
+                <p-message severity="error" size="small" variant="simple">Tipo documento es requerido.</p-message>
+            } -->
+      </div>
+      <div class="flex flex-col grow basis-0 gap-2">
+         <label for="documento" class="font-bold">Documento</label>
+         <input pInputText id="documento" type="text" required/>
+      </div>
+   </div>
+   <div class="flex flex-col grow basis-0 gap-2">
+      <label for="telefono" class="font-bold">Telefono</label>
+      <input type="text" pInputText id="telefono"  required autofocus fluid />
+   </div>
+   <div class="flex flex-col grow basis-0 gap-2">
+      <label for="email" class="font-bold">Email</label>
+      <input type="email" pInputText id="email"  required autofocus fluid />
+   </div>
+   <div class="flex items-center justify-end gap-4">
+      <p-button label="Cancelar" severity="danger" icon="pi pi-times" text (click)="hideDialog()" />
+      <p-button label="Guardar" icon="pi pi-check" (click)="saveProduct()" />
+   </div>
+
+</div>

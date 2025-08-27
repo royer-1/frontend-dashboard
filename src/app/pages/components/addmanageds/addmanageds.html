@@ -1,0 +1,54 @@
+<div class="flex flex-col gap-6">
+   <div class="flex flex-col grow basis-0 gap-2">
+      <label for="nombres" class="font-bold">Nombres</label>
+      <input type="text" pInputText id="nombres" required autofocus fluid />
+   </div>
+   <div class="flex flex-wrap gap-5">
+      <div class="flex flex-col grow basis-0 gap-2">
+         <label for="apellido1" class="font-bold">Apellido paterno</label>
+         <input pInputText id="apellido1" type="text" required/>
+      </div>
+      <div class="flex flex-col grow basis-0 gap-2">
+         <label for="apellido2" class="font-bold">Apellido materno</label>
+         <input pInputText id="apellido2" type="text" required/>
+      </div>
+   </div>
+   <div class="flex flex-wrap gap-5">
+      <div #exampleForm (ngSubmit)="onSubmit(exampleForm)" class="flex flex-col grow basis-0 gap-2">
+         <label for="tipo_documento" class="font-bold">Tipo de Documento</label>
+         <p-select [(ngModel)]="tipo_doc" [options]="tipo_doc" optionLabel="name" placeholder="Tipo de Documento" />
+         <!-- <p-select #Doc="ngModel" [(ngModel)]="selectedDoc" [options]="tipo_doc" [invalid]="Doc.invalid && (Doc.touched || tipo_doc)" optionLabel="name" placeholder="Tipo de Documento" class="w-full md:w-56" required />
+            @if (Doc.invalid && (Doc.touched || tipo_doc)) {
+                <p-message severity="error" size="small" variant="simple">Tipo documento es requerido.</p-message>
+            } -->
+      </div>
+      <div class="flex flex-col grow basis-0 gap-2">
+         <label for="documento" class="font-bold">Documento</label>
+         <input pInputText id="documento" type="text" required/>
+      </div>
+   </div>
+   <div class="flex flex-col grow basis-0 gap-2">
+      <label for="razon_social" class="font-bold">Razon social</label>
+      <input type="text" pInputText id="razon_social" required autofocus fluid />
+   </div>
+   <div class="flex flex-col grow basis-0 gap-2">
+      <label for="telefono" class="font-bold">Teléfono</label>
+      <input type="text" pInputText id="telefono" required autofocus fluid />
+   </div>
+   <div class="flex flex-col grow basis-0 gap-2">
+      <label for="correo" class="font-bold">Correo</label>
+      <input type="text" pInputText id="correo" required autofocus fluid />
+   </div>
+   <div class="flex flex-col grow basis-0 gap-2">
+      <label for="direccion" class="font-bold">Dirección</label>
+      <input type="text" pInputText id="direccion" required autofocus fluid />
+   </div>
+   <div class="flex flex-col grow basis-0 gap-2">
+      <label for="ubigeo" class="font-bold">Ubigeo</label>
+      <input type="text" pInputText id="ubigeo" required autofocus fluid />
+   </div>
+   <div class="flex items-center justify-end gap-4 mt-6">
+      <p-button label="Cancelar" class="w-30" severity="secondary" styleClass="w-full" outlined></p-button>
+      <p-button label="Agregar" class="w-30" severity="success" styleClass="w-full" outlined (onClick)="addManaged()"></p-button>
+   </div>
+</div>

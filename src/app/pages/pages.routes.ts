@@ -1,11 +1,7 @@
 import { Routes } from '@angular/router';
-import { Documentation } from './documentation/documentation';
-import { Crud } from './crud/crud';
-import { Empty } from './empty/empty';
+import { Inmuebles } from './inmuebles/inmuebles';
 
 export default [
-    { path: 'documentation', component: Documentation },
-    { path: 'crud', component: Crud },
-    { path: 'empty', component: Empty },
+    { path: 'inmuebles', component: Inmuebles },
     { path: '**', redirectTo: '/notfound' }
 ] as Routes;
