@@ -6,16 +6,22 @@ import { StyleClassModule } from 'primeng/styleclass';
 import { AppConfigurator } from './app.configurator';
 import { LayoutService } from '../service/layout.service';
 
+import { Logout } from '@/pages/auth/logout/logout';
+
+import { DialogModule } from 'primeng/dialog';
+import { ButtonModule } from 'primeng/button';
+
 @Component({
     selector: 'app-topbar',
     standalone: true,
-    imports: [RouterModule, CommonModule, StyleClassModule, AppConfigurator],
-    template: ` <div class="layout-topbar">
+    imports: [RouterModule, CommonModule, StyleClassModule, AppConfigurator, DialogModule, Logout],
+    template: ` 
+    <div class="layout-topbar">
         <div class="layout-topbar-logo-container">
             <button class="layout-menu-button layout-topbar-action" (click)="layoutService.onMenuToggle()">
                 <i class="pi pi-bars"></i>
             </button>
-            <a class="layout-topbar-logo" routerLink="/">
+            <a class="layout-topbar-logo" routerLink="/dashboard">
                 <svg viewBox="0 0 54 40" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path
                         fill-rule="evenodd"
@@ -33,7 +39,7 @@ import { LayoutService } from '../service/layout.service';
                         />
                     </g>
                 </svg>
-                <span>SAKAI</span>
+                <span>UNIDAD DE CONTROL PATRIMONIAL</span>
             </a>
         </div>
 
@@ -73,20 +79,34 @@ import { LayoutService } from '../service/layout.service';
                         <span>Messages</span>
                     </button>
                     <button type="button" class="layout-topbar-action">
-                        <i class="pi pi-user"></i>
-                        <span>Profile</span>
+                        <button type="button" class="layout-topbar-action" (click)="logoutDialog()">
+                            <i class="pi pi-user"></i>
+                            <span>Profile</span>
+                        </button>
                     </button>
                 </div>
             </div>
         </div>
-    </div>`
+    </div>
+    
+    <!-- Dialog emergente -->
+    <p-dialog header="Perfil de Usuario" [(visible)]="logoutVisible" [breakpoints]="{ '960px': '75vw' }" [style]="{ width: '20vw' }" [modal]="false" [position]="'topright'" [closable]="true">
+      <app-logout></app-logout> 
+    </p-dialog>
+    `
 })
 export class AppTopbar {
     items!: MenuItem[];
+
+    logoutVisible: boolean = false;
 
     constructor(public layoutService: LayoutService) {}
 
     toggleDarkMode() {
         this.layoutService.layoutConfig.update((state) => ({ ...state, darkTheme: !state.darkTheme }));
+    }
+
+    logoutDialog() {
+        this.logoutVisible = true;
     }
 }

@@ -10,57 +10,133 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 import { TagModule } from 'primeng/tag';
 import { DialogModule } from 'primeng/dialog';
 import { Select } from 'primeng/select';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { MessageService, ConfirmationService } from 'primeng/api';
 
 import { Detailsproperty } from '../components/detailsproperty/detailsproperty';
-import { Property, PropertyService } from '../service/property.service';
+import { PropertyService } from '../service/property.service';
+import { Addproperty } from '../components/addproperty/addproperty';
 
-interface TypeProperty {
-    name: string;
-    code: string;
-}
+import { Property } from '../models/Property';
+import { TypePropertyService } from '../service/typeproperty.service';
+import { TypeProperty } from '../models/TypeProperty';
 
 @Component({
   selector: 'app-propertys',
-  imports: [CommonModule, DataViewModule, FormsModule, SelectButtonModule, TagModule, ButtonModule, PickListModule, OrderListModule, DialogModule, Detailsproperty, Select],
+  imports: [CommonModule, DataViewModule, FormsModule, SelectButtonModule, TagModule, ButtonModule, PickListModule, OrderListModule, DialogModule, Detailsproperty, Addproperty, Select, ConfirmDialogModule],
   templateUrl: './propertys.html',
   styleUrl: './propertys.scss',
-  providers: [PropertyService]
+  providers: [PropertyService, ConfirmationService, TypePropertyService, MessageService]
 })
 export class Propertys {
 
     layout: 'grid' | 'list' = 'grid';
-
     options = ['grid', 'list'];
 
     visibleDetails: boolean = false;
+    visibleAdd: boolean = false;
 
-    property!: Property[];
+    properties: Property[] = [];
+    allProperties: Property[] = [];
+    selectedProperty: Property | null = null;
 
-    selectedItem: any = null;
+    // property!: Property[];
+    // allProperties: Property[] = [];
+    // selectedItem: any = null;
+
+    typeProperty: { label: string; value: string | 'Todos' }[] = [];
+    selectedTypeProperty: string | 'Todos' | undefined;
 
     constructor(
-        private propertyService: PropertyService
+        private propertyService: PropertyService,
+        private typePropertyService: TypePropertyService,
+        private messageService: MessageService
     ) {}
 
     ngOnInit() {
-        this.propertyService.getPropertySmall().then((data) => (this.property = data.slice(0, 10)));
-
-        this.typeProperty = [
-            { name: 'Auditorio', code: 'AUD' },
-            { name: 'Quioscos', code: 'KI' },
-            { name: 'SS.HH', code: 'SH' },
-            { name: 'Todos', code: 'TDO' }
-        ];
+        this.loadProperties();
+        this.loadTypes();
     }
 
-    details(item:any) {
-        this.selectedItem = item;
+    loadProperties() {
+        this.propertyService.getAll().subscribe({
+        next: (data) => {
+            console.log('Predios cargados:', data);
+            this.allProperties = data;
+            this.properties  = [...this.allProperties];
+        },
+        error: (err) => console.error('Error cargando predios', err)
+        });
+    }
+    
+
+    loadTypes() {
+        this.typePropertyService.getAll().subscribe({
+        next: (types) => {
+            console.log('Tipos cargados:', types);
+            this.typeProperty = [
+            { label: 'Todos', value: 'Todos' },
+            ...types.map(t => ({ label: t.NombreTipo, value: String(t.IdPredioTipo) }))
+            ];
+        },
+        error: (err) => console.error('Error cargando tipos de predio', err)
+        });
+    }
+
+    filterProperties() {
+        console.log('Filtro activo:', this.selectedTypeProperty);
+        if (!this.selectedTypeProperty || this.selectedTypeProperty === 'Todos') {
+    this.properties = [...this.allProperties];
+  } else {
+    this.properties = this.allProperties.filter(p => {
+      // 👇 Aquí agregas el log
+      console.log('Comparando:', p.IdPredioTipo, this.selectedTypeProperty);
+      return p.IdPredioTipo === this.selectedTypeProperty;
+    });
+  }
+    }
+
+    updateList(updated: Property) {
+        const filtroActivo = this.selectedTypeProperty;
+       this.allProperties = this.allProperties.map(p =>
+            p.IdPredio === updated.IdPredio ? updated : p
+        );
+
+        this.selectedTypeProperty = filtroActivo; 
+        this.filterProperties();
+
+        this.selectedProperty = updated;
+         const sigueVisible = this.properties.some(p => p.IdPredio === updated.IdPredio);
+    if (!sigueVisible) {
+        this.visibleDetails = true; // fuerza mostrar detalles
+        this.messageService.add({
+        severity: 'info',
+        summary: 'Tipo cambiado',
+        detail: 'El predio fue editado y movido a otra categoría. Se mantiene visible en detalles.'
+        });
+    }
+    console.log('Recibido en padre:', updated);
+    }
+
+    addProperty () {
+        this.visibleAdd = true;
+    }
+
+     deleteFromList(property: Property) {
+        this.allProperties = this.allProperties.filter(p => p.IdPredio !== property.IdPredio);
+        this.properties = this.properties.filter(p => p.IdPredio !== property.IdPredio);
+        this.visibleDetails = false;
+    }
+
+    detailsProperty (property: Property) {
+        this.selectedProperty = { ...property };
         this.visibleDetails = true;
+        console.log('Detalle seleccionado:', this.selectedProperty);
     }
 
-    typeProperty: TypeProperty[] | undefined;
-
-    selectedTypeProperty: TypeProperty | undefined;
+    rentalsProperty () {
+        console.log('Alquilar predio');
+    }
 
 
 }

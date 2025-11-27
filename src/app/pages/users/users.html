@@ -1,0 +1,87 @@
+
+<div class="card">
+   <div class="font-semibold text-xl">Usuarios</div>
+   <p-dataview [value]="user" [layout]="layout">
+      <ng-template  #header>
+         <div class="flex flex-row justify-between">
+            <div>
+               <p-button label="Nuevo" icon="pi pi-plus" severity="secondary" class="mr-2" (onClick)="addUser()" />
+               <p-dialog header="Nuevo usuario" [(visible)]="visibleAddUser" [breakpoints]="{ '960px': '75vw' }" [style]="{ width: '30vw' }" [modal]="true">
+                  <app-adduser (onCancel)="visibleAddUser = false" (onSaved)="visibleAddUser = false"></app-adduser>
+               </p-dialog>
+            </div>
+            <div class="flex justify-end">
+               <p-select-button [(ngModel)]="layout" [options]="options" [allowEmpty]="false">
+                  <ng-template #item let-option>
+                     <i class="pi " [ngClass]="{ 'pi-table': option === 'grid', 'pi-bars': option === 'list' }"></i>
+                  </ng-template>
+               </p-select-button>
+            </div>
+         </div>
+      </ng-template>
+
+      <ng-template #grid let-items>
+         <div class="grid grid-cols-16 gap-4">
+            <div *ngFor="let item of items; let i = index" class="col-span-12 sm:col-span-6 lg:col-span-4 p-2">
+               <div class="p-6 border border-surface-200 dark:border-surface-700 bg-surface-0 dark:bg-surface-900 rounded flex flex-col">
+                  <div class="text-lg font-medium mb-2">
+                     {{ item.nombre }}
+                  </div>
+                  <div>
+                     <span class="font-medium text-surface-500 dark:text-surface-400 text-sm">Correo: {{ item.correo }}</span>
+                  </div>
+                  <div>
+                     <span class="font-medium text-surface-500 dark:text-surface-400 text-sm">Telefono: {{ item.telefono }}</span>
+                  </div>
+                  <div class="relative my-3">
+                     <p-tag [value]="item.rol_user" [severity]="getSeverity(item.rol_user)"></p-tag>
+                  </div>
+                  <span class="font-medium text-surface-500 dark:text-surface-400 text-sm"> {{ item.direccion }}</span>
+                  <div class="mt-6">
+                     <p-button label="Ver detalles" class="flex-auto whitespace-nowrap" severity="secondary" styleClass="w-full" (onClick)="detailsUser(item)" outlined></p-button>
+                  </div>
+               </div>
+            </div>
+               <p-dialog header="Detalles" [modal]="true" [(visible)]="visibleDetails" [breakpoints]="{ '960px': '75vw' }" [style]="{ width: '350px' }">
+                  <app-detailsuser [user]="selectedItem"></app-detailsuser>
+               </p-dialog>
+         </div>
+      </ng-template>
+
+      <ng-template #list let-items>
+         <div class="flex flex-col">
+            <div *ngFor="let item of items; let i = index"> 
+               <div class="flex flex-col sm:flex-row sm:items-center p-6 gap-4" [ngClass]="{ 'border-t border-surface': i !== 0 }">
+                  <div class="flex flex-col md:flex-row justify-between md:items-center flex-1 gap-6">
+                     <div class="flex flex-row md:flex-col justify-between items-start gap-2">
+                        <div class="flex flex-col gap-1.5">
+                           <div class="text-lg font-medium mb-2">
+                              {{ item.nombre }}
+                           </div>
+                           <div>
+                              <span class="font-medium text-surface-500 dark:text-surface-400 text-sm">Correo: {{ item.correo }}</span>
+                           </div>
+                           <div>
+                              <span class="font-medium text-surface-500 dark:text-surface-400 text-sm">Telefono: {{ item.telefono }}</span>
+                           </div>
+                           <span class="font-medium text-surface-500 dark:text-surface-400 text-sm"> {{ item.direccion }}</span>
+                        </div>
+                     </div>
+                     <div class="flex flex-col md:items-end gap-8">
+                        <div class="flex flex-col content-center gap-5 w-45">
+                           <div class="flex justify-center">
+                              <p-tag [value]="item.rol_user" [severity]="getSeverity(item.rol_user)"></p-tag>
+                           </div>
+                           <p-button label="Ver detalles" class="flex-auto whitespace-nowrap" severity="secondary" styleClass="w-full" (onClick)="detailsUser(item)" outlined></p-button>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <p-dialog header="Detalles" [(visible)]="visibleDetails" [breakpoints]="{ '960px': '75vw' }" [style]="{ width: '400px' }" [modal]="true">
+                  <app-detailsuser [user]="selectedItem"></app-detailsuser>
+               </p-dialog>
+         </div>
+         </ng-template>
+   </p-dataview>
+</div>

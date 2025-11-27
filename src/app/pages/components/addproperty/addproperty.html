@@ -1,0 +1,84 @@
+<!-- <form #propertyForm="ngForm" (ngSubmit)="addProperty()" class="flex flex-col gap-6">
+   <div class="flex flex-col grow basis-0 gap-2">
+      <label for="tipoInmueble" class="font-bold">Tipo de Inmueble</label>
+      <p-select 
+         id="tipoInmueble"
+         [options]="typeProperty" 
+         [(ngModel)]="property.tipoInmueble"
+         name="tipoInmueble"
+         optionLabel="label" 
+         optionValue="value"
+         placeholder="Seleccione un tipo"
+         class="w-full"
+         required
+      />
+   </div>
+   <div class="flex flex-col grow basis-0 gap-2">
+      <label for="imagen" class="font-bold">Imagen</label>
+      <p-fileupload
+         id="imagen"
+         name="imagen"
+         [multiple]="false"
+         accept="image/*"
+         maxFileSize="1000000"
+         mode="advanced"
+         url="https://www.primefaces.org/cdn/api/upload.php"
+         chooseLabel="Elegir imagen"
+         uploadLabel="Subir"
+         cancelLabel="Cancelar"
+         (onUpload)="onUpload($event)"
+      >
+         <ng-template #empty>
+            <div>Arrastre y suelte su imagen aquí.</div>
+         </ng-template>
+      </p-fileupload>
+   </div>
+   <div class="flex flex-col grow basis-0 gap-2">
+      <label for="nombre" class="font-bold">Nombre</label>
+      <input type="text" pInputText id="nombre"  [(ngModel)]="property.nombre" name="nombre" required autofocus fluid />
+   </div>
+   <div class="flex flex-col grow basis-0 gap-2">
+      <label for="descripcion" class="font-bold">Descripción</label>
+      <textarea id="descripcion" pTextarea [(ngModel)]="property.descripcion" name="descripcion" placeholder="Descripción" [autoResize]="true" rows="3" cols="30"></textarea>
+   </div>
+   <div class="flex flex-col grow basis-0 gap-2">
+      <label for="area" class="font-bold">Dimensión(m²)</label>
+      <input type="number" pInputText id="area" [(ngModel)]="property.area" name="area" required autofocus fluid />
+   </div>
+   <div class="flex flex-col grow basis-0 gap-2 " *ngIf="property.tipoInmueble === 'Auditorio'">
+      <label for="capacidad" class="font-bold">Capacidad</label>
+      <input type="number" pInputText id="capacidad" [(ngModel)]="property.capacidad" name="capacidad" required autofocus fluid />
+   </div>
+   <div class="flex flex-wrap gap-5" *ngIf="property.tipoInmueble !== 'Auditorio'">
+      <div class="flex flex-col grow basis-0 gap-2">
+         <label for="registro_agua" class="font-bold">Registro de agua</label>
+         <p-togglebutton id="registro_agua" [(ngModel)]="valueWater" name="registro_agua" onLabel="Si" offLabel="No" [style]="{ width: '10em' }" styleClass="custom-toggle" />
+      </div>
+      <div class="flex flex-col grow basis-0 gap-2">
+         <label for="registro_luz" class="font-bold">Registro de luz</label>
+         <p-togglebutton id="registro_luz" [(ngModel)]="valueLight" name="registro_luz" onLabel="Si" offLabel="No" [style]="{ width: '10em' }" styleClass="custom-toggle" />
+      </div>
+   </div>
+   <div class="flex flex-col grow basis-0 gap-2">
+      <label for="direccion" class="font-bold">Dirección</label>
+      <input type="text" pInputText id="direccion" [(ngModel)]="property.direccion" name="direccion" required autofocus fluid />
+   </div>
+   <div class="flex flex-col grow basis-0 gap-2">
+      <label for="ubigeo" class="font-bold">Ubigeo</label>
+      <input type="number" pInputText id="ubigeo" [(ngModel)]="property.ubigeo" name="ubigeo" required autofocus fluid />
+   </div>
+   <div class="flex flex-wrap gap-5">
+      <div class="flex flex-col grow basis-0 gap-2">
+         <label for="latitud" class="font-bold">Latitud</label>
+         <input pInputText id="latitud" type="number" [(ngModel)]="property.latitud" name="latitud" required/>
+      </div>
+      <div class="flex flex-col grow basis-0 gap-2">
+         <label for="longitud" class="font-bold">Longitud</label>
+         <input pInputText id="longitud" type="number" [(ngModel)]="property.longitud" name="longitud" required/>
+      </div>
+   </div>
+   <div class="flex items-center justify-end gap-4 mt-6">
+      <p-button label="Cancelar" type="button" class="w-30" severity="secondary" styleClass="w-full" outlined (onClick)="cancel(propertyForm)"></p-button>
+      <p-button label="Agregar" type="submit" class="w-30" severity="success" styleClass="w-full" outlined ></p-button>
+   </div>
+</form> -->

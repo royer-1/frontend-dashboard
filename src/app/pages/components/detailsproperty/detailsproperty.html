@@ -1,64 +1,77 @@
 <div *ngIf="property">
    <div class="p-4 flex flex-col">
       <div class="relative w-full shadow-sm">
-         <img class="rounded w-full" src="{{ property.imagen }}" [alt]="property.nombre" />
+         <img class="rounded w-full" [src]="property.Imagen" [alt]="property.NombrePredio" />
       </div>
       <div class="pt-5">
          <div class="">
             <div>
                <div class="text-2xl font-bold">
-                  {{ property.nombre }}
+                  {{ property.NombrePredio }}
                </div>
                <div class="font-medium text-surface-500 dark:text-surface-400 text-sm mt-3">
-                  {{ property.direccion }}
+                  {{ property.Direccion}}
                </div>
                <div class="mt-4">
                   <span class="text-[14px] font-semibold">Descripción</span>
                   <div class="font-medium text-surface-500 dark:text-surface-400 text-sm mt-1">
-                     {{ property.descripcion }}
+                     {{ property.Descripcion }}
                   </div>
                   <div class="font-medium text-sm mt-3">
                      Dimensión:
-                     <span class="text-surface-500 dark:text-surface-400">{{ property.area }} m²</span> 
+                     <span class="text-surface-500 dark:text-surface-400">{{ property.AreaPredio }} m²</span> 
                   </div>
-                  <div class="font-medium text-sm mt-3">
-                     Registro de Agua:
-                     <span class="text-surface-500 dark:text-surface-400">{{ property.registro_agua }}</span> 
-                  </div>
-                  <div class="font-medium text-sm mt-3">
-                     Registro de luz:
-                     <span class="text-surface-500 dark:text-surface-400">{{ property.registro_luz }}</span> 
-                  </div>
+                  <!-- Si es Auditorio -->
+                  <ng-container *ngIf="esAuditorio()">
+                     <div class="font-medium text-sm mt-3">
+                        Capacidad:
+                        <span class="text-surface-500 dark:text-surface-400">{{ property.Capacidad }} personas</span>
+                     </div>
+                  </ng-container>
+
+                  <!-- Si es cualquier otro tipo -->
+                  <ng-container *ngIf="!esAuditorio()">
+                     <div class="font-medium text-sm mt-3">
+                        Registro de Agua:
+                        <span class="text-surface-500 dark:text-surface-400">{{ property.RegistroAgua ? 'Sí' : 'No' }}</span>
+                     </div>
+                     <div class="font-medium text-sm mt-3">
+                        Registro de Luz:
+                        <span class="text-surface-500 dark:text-surface-400">{{ property.RegistroLuz ? 'Sí' : 'No' }}</span>
+                     </div>
+                  </ng-container>
                </div>
                <div class="mt-4">
                   <span class="text-[14px] font-semibold">Ubicación</span>
                   <div class="font-medium text-sm mt-3">
                      Ubigeo:
-                     <span class="text-surface-500 dark:text-surface-400">{{ property.ubigeo }}</span> 
+                     <span class="text-surface-500 dark:text-surface-400">{{ property.Ubigeo }}</span> 
                   </div>
                   <div class="flex flex-row gap-12">
                      <div class="font-medium text-sm mt-3">
                         Latitud:
-                        <span class="text-surface-500 dark:text-surface-400">{{ property.latitud }}</span> 
+                        <span class="text-surface-500 dark:text-surface-400">{{ property.Latitud }}</span> 
                      </div>
                      <div class="font-medium text-sm mt-3">
                         Longitud:
-                        <span class="text-surface-500 dark:text-surface-400">{{ property.longitud }}</span> 
+                        <span class="text-surface-500 dark:text-surface-400">{{ property.Longitud }}</span> 
                      </div>
                   </div>
                </div>
                <div class="flex flex-row justify-between gap-5 mt-8">
-                  <p-button label="Eliminar" class="flex-auto whitespace-nowrap" severity="danger" styleClass="w-full" outlined></p-button>
-                  <p-button label="Editar" class="flex-auto whitespace-nowrap" severity="success" styleClass="w-full" outlined (onClick)="editProperty(property)"></p-button>
-                  <!-- <p-dialog header="Editar Inmueble" [(visible)]="visibleEdit" [breakpoints]="{ '960px': '75vw' }" [style]="{ width: '30vw' }" [modal]="true">
-                     <app-editproperty [property]="selectedProperty"></app-editproperty>
-                  </p-dialog> -->
+                  <p-button label="Eliminar" class="flex-auto whitespace-nowrap" severity="danger" styleClass="w-full" outlined (click)="deleteProperty(property)"></p-button>
+                  <p-button label="Editar" class="flex-auto whitespace-nowrap" severity="success" styleClass="w-full" outlined (click)="editProperty(property)"></p-button>
                </div>
             </div>
          </div>
       </div>
-      <p-dialog header="Editar Inmueble" [(visible)]="visibleEdit" [breakpoints]="{ '960px': '75vw' }" [style]="{ width: '30vw' }" [modal]="true">
-            <app-editproperty [property]="selectedProperty"></app-editproperty>
+      <p-dialog header="Editar Inmueble" [(visible)]="visibleEdit" [breakpoints]="{ '960px': '75vw' }" [style]="{ width: '30vw' }" [modal]="true" appendTo="body">
+            <app-editproperty 
+               *ngIf="selectedProperty"
+               [property]="selectedProperty" 
+               (close)="visibleEdit = false"
+               (onSaved)="propertyUpdated($event)">
+            </app-editproperty>
       </p-dialog>
    </div>
 </div>

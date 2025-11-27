@@ -1,64 +1,88 @@
-<div class="w-full h-full" *ngIf="property">
-  <div class="flex flex-col gap-6">
-    <div>
-      <img
-        [src]="property.imagen"
-        *ngIf="property.imagen && property.imagen.length"
-        class="block m-auto pb-4 w-full max-h-60 object-cover rounded"
-        [alt]="property.nombre"
-      />
-    </div>
+<form *ngIf="property" #editForm="ngForm" (ngSubmit)="saveproperty()">
 
-    <div class="flex flex-col grow basis-0 gap-2">
-      <label for="dimension" class="block font-bold mb-2">Nombre</label>
-      <input type="text" id="nombre" pInputText [(ngModel)]="property.nombre" />
-    </div>
-    
-    <div class="flex flex-col grow basis-0 gap-2">
-      <label for="description" class="block font-bold mb-2">Descripción</label>
-      <textarea id="description" pTextarea [(ngModel)]="property.descripcion" required rows="3" cols="20" fluid></textarea>
-    </div>
-
-    <div class="flex flex-col grow basis-0 gap-2">
-      <label for="dimension" class="block font-bold mb-2">Dimensión (m²)</label>
-      <input type="text" id="dimension" pInputText [(ngModel)]="property.area" />
-    </div>
-
-
-    <div class="flex flex-col grow basis-0 gap-2">
-      <label for="ciudad" class="block font-bold mb-2">Dirección</label>
-      <input type="text" id="direccion" pInputText [(ngModel)]="property.direccion"/>
-    </div>
-
-    <div class="flex flex-col grow basis-0 gap-2">
-      <label for="ciudad" class="block font-bold mb-2">Ubigeo</label>
-      <input type="text" id="ciudad" pInputText [(ngModel)]="property.ubigeo" />
-    </div>
-
-    <div class="flex flex-row justify-between gap-5">
-      <div class="flex flex-col w-full">
-        <label for="precio" class="block font-bold mb-2">Latitud</label>
-         <input type="text" id="ciudad" pInputText [(ngModel)]="property.latitud" />
+  <div class="w-full h-full">
+    <div class="flex flex-col gap-6">
+      <div>
+        <img
+          [src]="property.Imagen"
+          *ngIf="property.Imagen && property.Imagen.length"
+          class="block m-auto pb-4 w-full max-h-60 object-cover rounded"
+          [alt]="property.NombrePredio"
+          name="imagen"
+        />
+        <p-fileUpload 
+          mode="basic"
+          name="demo[]"
+          accept="image/*"
+          chooseLabel="Cambiar Imagen"
+          [auto]="true"
+          (onSelect)="onImageSelected($event)"
+          [customUpload]="true"
+          (uploadHandler)="onImageUpload($event)"
+        ></p-fileUpload>
       </div>
-      <div class="flex flex-col w-full">
-        <label for="tiempo" class="block font-bold mb-2">Longitud</label>
-         <input type="text" id="ciudad" pInputText [(ngModel)]="property.longitud" />
+
+      <div class="flex flex-col grow basis-0 gap-2">
+        <label for="nombre" class="block font-bold mb-2">Nombre</label>
+        <input type="text" id="nombre" name="nombre" pInputText [(ngModel)]="property.NombrePredio" required />
+      </div>
+      
+      <div class="flex flex-col grow basis-0 gap-2">
+        <label for="description" class="block font-bold mb-2">Descripción</label>
+        <textarea id="description" name="description" pTextarea [(ngModel)]="property.Descripcion" required rows="3" cols="20" fluid ></textarea>
+      </div>
+
+      <div class="flex flex-col grow basis-0 gap-2">
+        <label for="dimension" class="block font-bold mb-2">Dimensión (m²)</label>
+        <input type="number" id="dimension" name="dimension" pInputText [(ngModel)]="property.AreaPredio" required />
+      </div>
+
+      <ng-container *ngIf="esAuditorio()">
+        <div class="flex flex-col grow basis-0 gap-2">
+          <label for="capacidad" class="block font-bold mb-2">Capacidad</label>
+          <input type="text" id="capacidad" name="capacidad" pInputText [(ngModel)]="property.Capacidad" />
+        </div>
+      </ng-container>
+
+      <ng-container *ngIf="!esAuditorio()">
+        <div class="flex flex-row justify-between gap-5">
+          <div class="flex flex-col grow basis-0 gap-2">
+            <label for="registro_agua" class="font-bold">Registro de agua</label>
+            <p-togglebutton id="registro_agua" name="registro_agua" [(ngModel)]="property.RegistroAgua" onLabel="Si" offLabel="No" [style]="{ width: '10em' }" styleClass="custom-toggle" />
+          </div>
+          <div class="flex flex-col grow basis-0 gap-2">
+            <label for="registro_luz" class="font-bold">Registro de luz</label>
+            <p-togglebutton id="registro_luz" name="registro_luz" [(ngModel)]="property.RegistroLuz" onLabel="Si" offLabel="No" [style]="{ width: '10em' }" styleClass="custom-toggle" />
+          </div>
+        </div>
+      </ng-container>
+
+      <div class="flex flex-col grow basis-0 gap-2">
+        <label for="direccion" class="block font-bold mb-2">Dirección</label>
+        <input type="text" id="direccion" name="direccion" pInputText [(ngModel)]="property.Direccion" required />
+      </div>
+
+      <div class="flex flex-col grow basis-0 gap-2">
+        <label for="ubigeo" class="block font-bold mb-2">Ubigeo</label>
+        <input type="text" id="ubigeo" name="ubigeo" pInputText [(ngModel)]="property.Ubigeo" required />
+      </div>
+
+      <div class="flex flex-row justify-between gap-5">
+        <div class="flex flex-col w-full">
+          <label for="latitud" class="block font-bold mb-2">Latitud</label>
+          <input type="number" id="latitud" name="latitud" pInputText [(ngModel)]="property.Latitud" required />
+        </div>
+        <div class="flex flex-col w-full">
+          <label for="longitud" class="block font-bold mb-2">Longitud</label>
+          <input type="number" id="longitud" name="longitud" pInputText [(ngModel)]="property.Longitud" required />
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end gap-4 mt-6">
+        <p-button label="Cancelar" type="button" severity="danger" icon="pi pi-times" (onClick)="cancel()"  outlined/>
+        <p-button label="Guardar" type="submit" severity="success" icon="pi pi-check"  outlined/>
       </div>
     </div>
-
-    <div class="flex items-center justify-end gap-4 mt-6">
-      <p-button label="Cancelar" severity="danger" icon="pi pi-times"  outlined/>
-      <p-button label="Guardar"  severity="success" icon="pi pi-check"  outlined/>
-   </div>
   </div>
-</div>
 
-<!-- <div class="flex flex-col grow basis-0 gap-2">
-      <label for="tipoInmueble" class="block font-bold mb-2">Nombre</label>
-      <p-select
-        id="tipoInmueble"
-        [options]="tipoInmuebleOptions"
-        [(ngModel)]="property.tipoInmueble"
-        placeholder="Seleccione un tipo"
-      ></p-select>
-    </div> -->
+</form>

@@ -1,51 +1,55 @@
-<div class="flex flex-col gap-6" *ngIf="managed">
+<form *ngIf="managed" #editForm="ngForm" (ngSubmit)="editManaged()">
+
+<div class="flex flex-col gap-6">
    <div class="flex flex-col grow basis-0 gap-2">
       <label for="nombres" class="font-bold">Nombres</label>
-      <input type="text" pInputText id="nombres" [(ngModel)]="managed.nombres" required autofocus fluid disabled />
+      <input type="text" pInputText id="nombres" name="nombres" [(ngModel)]="managed.nombres" required disabled />
    </div>
    <div class="flex flex-wrap gap-5">
       <div class="flex flex-col grow basis-0 gap-2">
          <label for="apellido1" class="font-bold">Apellido paterno</label>
-         <input pInputText id="apellido1" type="text" [(ngModel)]="managed.apellido1" required disabled/>
+         <input pInputText id="apellido1" name="apellido1" type="text" [(ngModel)]="managed.apellido1" required disabled/>
       </div>
       <div class="flex flex-col grow basis-0 gap-2">
          <label for="apellido2" class="font-bold">Apellido materno</label>
-         <input pInputText id="apellido2" type="text" [(ngModel)]="managed.apellido2" required disabled/>
+         <input pInputText id="apellido2" name="apellido2" type="text" [(ngModel)]="managed.apellido2" required disabled/>
       </div>
    </div>
    <div class="flex flex-wrap gap-5">
       <div class="flex flex-col grow basis-0 gap-2">
          <label for="tipo_documento" class="font-bold">Tipo documento</label>
-         <input pInputText id="tipo_documento" type="text" [(ngModel)]="managed.tipo_doc" required disabled/>
+         <input pInputText id="tipo_documento" name="tipo_documento" type="text" [(ngModel)]="managed.tipo_doc" required disabled/>
       </div>
       <div class="flex flex-col grow basis-0 gap-2">
          <label for="documento" class="font-bold">Documento</label>
-         <input pInputText id="documento" type="text" [(ngModel)]="managed.numero_doc" required disabled/>
+         <input pInputText id="documento" name="documento" type="text" [(ngModel)]="managed.numero_doc" required disabled/>
       </div>
    </div>
    <div class="flex flex-col grow basis-0 gap-2">
       <label for="razon_social" class="font-bold">Razon social</label>
-      <input type="text" pInputText id="razon_social" [(ngModel)]="managed.razon_social" required />
+      <input type="text" pInputText id="razon_social" name="razon_social" [(ngModel)]="managed.razon_social" autofocus />
    </div>
    <div class="flex flex-col grow basis-0 gap-2">
       <label for="telefono" class="font-bold">Teléfono</label>
-      <input type="text" pInputText id="telefono" [(ngModel)]="managed.telefono" required />
+      <input type="text" pInputText id="telefono" name="telefono" [(ngModel)]="managed.telefono" required />
    </div>
    <div class="flex flex-col grow basis-0 gap-2">
       <label for="correo" class="font-bold">Correo</label>
-      <input type="text" pInputText id="correo" [(ngModel)]="managed.correo" required />
+      <input type="text" pInputText id="correo" name="correo" [(ngModel)]="managed.correo" required />
    </div>
    <div class="flex flex-col grow basis-0 gap-2">
       <label for="direccion" class="font-bold">Dirección</label>
-      <input type="text" pInputText id="direccion" [(ngModel)]="managed.direccion" required />
+      <input type="text" pInputText id="direccion" name="direccion" [(ngModel)]="managed.direccion" required />
    </div>
    <div class="flex flex-col grow basis-0 gap-2">
       <label for="ubigeo" class="font-bold">Ubigeo</label>
-      <input type="text" pInputText id="ubigeo" [(ngModel)]="managed.ubigeo" required />
+      <input type="text" pInputText id="ubigeo" name="ubigeo" [(ngModel)]="managed.ubigeo" required />
    </div>
    <div class="flex items-center justify-end gap-4 mt-6">
-      <p-button label="Cancelar" class="w-30" severity="secondary" styleClass="w-full" outlined></p-button>
-      <p-button label="Guardar" class="w-30" severity="success" styleClass="w-full" outlined (onClick)="editManaged()"></p-button>
+      <p-button label="Cancelar" class="w-30" type="button" severity="secondary" styleClass="w-full" outlined (onClick)="cancel()"></p-button>
+      <p-button label="Guardar" class="w-30" type="submit" severity="success" styleClass="w-full" outlined></p-button>
    </div>
 </div>
+
+</form>
 

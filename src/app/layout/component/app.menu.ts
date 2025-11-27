@@ -22,45 +22,17 @@ export class AppMenu {
         this.model = [
             {
                 label: 'PRINCIPAL',
-                items: [{ label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/'] }]
+                items: [{ label: 'Dashboard', icon: 'pi pi-fw pi-home', routerLink: ['/dashboard'] }]
             },
             {
                 label: 'CATEGORIAS',
                 items: [
-                    {
-                        label: 'Inmuebles',
-                        icon: 'pi pi-fw  pi-home',
-                        items: [
-                            {
-                                label: 'Inmmueble',
-                                icon: 'pi pi-fw pi-warehouse',
-                                routerLink: ['/inmuebles/inmuebles']
-                            },
-                            {
-                                label: 'Audiorios',
-                                icon: 'pi pi-fw pi-building',
-                                routerLink: ['']
-                            },
-                            {
-                                label: 'otros',
-                                icon: 'pi pi-fw pi-th-large',
-                                routerLink: ['']    
-                            }
-                        ]
-                    },
-                     { label: 'Reservas', icon: 'pi pi-fw pi pi-calendar', routerLink: [''] },
-                    { label: 'Alquileres', icon: 'pi pi-fw pi-check-square', routerLink: [''] },
-                    { label: 'Contratos', icon: 'pi pi-fw pi-file-edit', routerLink: ['/contracts/contracts'] },
-                    { label: 'Administrados', icon: 'pi pi-fw pi-users', routerLink: [''] },
-                    { label: 'Usuarios', icon: 'pi pi-fw pi-user', routerLink: ['/customer/customer'] }
-                    // { label: 'Pagos', icon: 'pi pi-fw pi-money-bill', routerLink: ['/uikit/table'] },
-                    // { label: 'Reportes', icon: 'pi pi-fw pi-chart-bar', routerLink: ['/uikit/table'] },
-                    // { label: 'Clientes', icon: 'pi pi-fw pi-list', routerLink: ['/customer/customer'] },
-                    // { label: '------', icon: 'pi pi-fw pi-share-alt', routerLink: ['/uikit/tree'] },
-                    // { label: '------', icon: 'pi pi-fw pi-tablet', routerLink: ['/uikit/panel'] },
-                    // { label: '------', icon: 'pi pi-fw pi-clone', routerLink: ['/uikit/overlay'] },
-                    // { label: '------', icon: 'pi pi-fw pi-image', routerLink: ['/uikit/media'] },
-        
+                    { label: 'Predios', icon: 'pi pi-fw  pi-home', routerLink: ['/propertys']},
+                    // { label: 'Reservas', icon: 'pi pi-fw pi pi-calendar', routerLink: [''] },
+                    { label: 'Alquileres', icon: 'pi pi-fw pi-check-square', routerLink: ['/rentals'] },
+                    { label: 'Contratos', icon: 'pi pi-fw pi-file-edit', routerLink: ['/contracts'] },
+                    { label: 'Administrados', icon: 'pi pi-fw pi-users', routerLink: ['/manageds'] },
+                    { label: 'Usuarios', icon: 'pi pi-fw pi-user', routerLink: ['/users'] }
                 ]
             },
             {
@@ -75,35 +47,20 @@ export class AppMenu {
                             {
                                 label: 'Ingresos',
                                 icon: 'pi pi-fw pi-chart-line',
-                                routerLink: ['/auth/login']
+                                routerLink: ['']
                             },
                             {
                                 label: 'Gastos',
                                 icon: 'pi pi-fw pi-wallet',
-                                routerLink: ['/auth/error']
+                                routerLink: ['']
                             },
                             {
                                 label: 'Informes Financieros',
                                 icon: 'pi pi-fw pi-file',
-                                routerLink: ['/auth/access']
+                                routerLink: ['']
                             }
                         ]
                     },
-                    // {
-                    //     label: '-----',
-                    //     icon: 'pi pi-fw pi-pencil',
-                    //     routerLink: ['/pages/crud']
-                    // },
-                    // {
-                    //     label: '-----',
-                    //     icon: 'pi pi-fw pi-exclamation-circle',
-                    //     routerLink: ['/pages/notfound']
-                    // },
-                    // {
-                    //     label: '-----',
-                    //     icon: 'pi pi-fw pi-circle-off',
-                    //     routerLink: ['/pages/empty']
-                    // }
                 ]
             },
 
@@ -112,7 +69,7 @@ export class AppMenu {
                 icon: 'pi pi-fw pi-briefcase',
                 routerLink: ['/pages'],
                 items: [
-                    { label: 'Configuración', icon: 'pi pi-fw pi-cog', routerLink: ['/uikit/input'] },
+                    { label: 'Configuración', icon: 'pi pi-fw pi-cog', routerLink: [''] },
                 ]
             }
         ];

@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, Input } from '@angular/core';
 import { ButtonModule } from 'primeng/button';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
@@ -14,16 +14,25 @@ import { Table } from 'primeng/table';
 })
 export class TableSearchBarComponent {
 
-  @ViewChild('dt') dt!: Table;
+   @Input() table!: Table;
+
+  // @ViewChild('dt') dt!: Table;
+
   @ViewChild('filter') filter!: ElementRef;
 
-  clear(table: Table) {
-    table.clear();
-    this.filter.nativeElement.value = '';
+  clear() {
+    if (this.table) {
+      this.table.clear();
+    }
+    if (this.filter) {
+      this.filter.nativeElement.value = '';
+    }
   }
 
-  onGlobalFilter(table: Table, event: Event) {
-        table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
+  onGlobalFilter(event: Event) {
+    if (this.table) {
+      this.table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
     }
+  }
 
 }

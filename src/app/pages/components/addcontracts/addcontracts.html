@@ -1,0 +1,123 @@
+<form #contractForm="ngForm" (ngSubmit)="addContract(contractForm)">
+   <div class="flex justify-between flex-row items-start gap-5">
+      <div class="flex flex-col gap-6">
+         <div class="flex flex-wrap gap-5">
+            <div class="flex flex-col grow basis-0 gap-2 ">
+               <label for="tipo_doc" class="font-bold">Tipo de Documento</label>
+               <p-select 
+                  [(ngModel)]="selectedDoc" 
+                  [options]="tipo_doc" 
+                  optionLabel="label" 
+                  optionValue="value"
+                  placeholder="Tipo de Documento"
+                  name="tipo_doc"
+                  required  
+               />
+            </div>
+               <div class="flex flex-col grow basis-0 gap-2 w-40"> 
+               <!-- lo puse que el ancho sea w-40 pero cuidando surgen errores con lo del responsive -->
+               <label for="documento" class="font-bold">Documento</label>
+               <input pInputText id="documento" name="documento" type="text" [(ngModel)]="numeroDoc" required/>
+            </div>
+            <div class="flex items-end">
+               <p-button type="button" styleClass="h-full" severity="secondary" icon="pi pi-search" [loading]="loading[2]" (click)="load(2)" />
+            </div>
+         </div>
+         <div class="flex flex-col grow basis-0 gap-2">
+            <input type="text" [(ngModel)]="nombreAdministrado" name="nombre_administrado"  pInputText id="nombre_administrado" placeholder="Nombre administrado" required autofocus fluid disabled />
+         </div>
+         <div class="flex flex-col grow basis-0 gap-2">
+            <label for="nombre_inmueble" class="font-bold">Seleccionar Inmueble</label>
+            <p-select 
+               [(ngModel)]="contract.nombre_inmueble"
+               [options]="inmuebles" 
+               optionLabel="label" 
+               optionValue="value"
+               placeholder="Seleccionar Inmueble"
+               name="nombre_inmueble"
+               required
+            />
+         </div>
+         <div class="flex flex-col grow basis-0 gap-2">
+            <label for="num_contrato" class="font-bold">Numero de contrato</label>
+            <input pInputText id="num_contrato" type="number" name="num_contrato" [(ngModel)]="contract.num_contrato" required/>
+         </div>
+         <div class="flex flex-wrap gap-5">
+            <div class="flex flex-col grow basis-0 gap-2">
+               <label for="fecha_inicio" class="font-bold">Fecha inicio</label>
+               <p-datepicker inputId="fecha_inicio" name="fecha_inicio" [(ngModel)]="contract.fecha_inicio" [showTime]="true" hourFormat="12" [iconDisplay]="'input'" [showIcon]="true" required />
+            </div>
+            <div class="flex flex-col grow basis-0 gap-2">
+               <label for="fecha_final" class="font-bold">Fecha final</label>
+               <p-datepicker name="fecha_final" inputId="fecha_final" [(ngModel)]="contract.fecha_final" [showTime]="true" hourFormat="12" [iconDisplay]="'input'" [showIcon]="true" inputId="icondisplay" required />
+            </div>
+         </div>
+         <div class="flex flex-col grow basis-0 gap-2">
+            <label for="monto_alquiler" class="font-bold">Monto de alquiler</label>
+            <input pInputText id="monto_alquiler" type="number" name="monto_alquiler" [(ngModel)]="contract.monto_alquiler" required/>
+         </div>
+         <div class="flex flex-wrap gap-5">
+            <div class="flex flex-col grow basis-0 gap-2">
+               <label for="monto_agua" class="font-bold">Monto de agua</label>
+               <input pInputText id="monto_agua" type="number" name="monto_agua" [(ngModel)]="contract.monto_agua" required/>
+            </div>
+            <div class="flex flex-col grow basis-0 gap-2">
+               <label for="monto_luz" class="font-bold">Monto de luz</label>
+               <input pInputText id="monto_luz" type="number" name="monto_luz" [(ngModel)]="contract.monto_luz" required/>
+            </div>
+         </div>
+      </div>
+      <!-- <div class="w-px bg-gray-400 mx-4"></div> -->
+      <div class="flex flex-col gap-6">
+         <h5 class="text-center">Cronograma de pagos</h5>
+         <div class="flex flex-wrap gap-5">
+            <div class="flex flex-col grow basis-0 gap-2">
+               <label for="periodo_inicio" class="font-bold">Periodo de inicio</label>
+               <p-datepicker inputId="periodo_inicio" name="periodo_inicio" [(ngModel)]="contract.periodo_inicio" [showTime]="true" hourFormat="12" [iconDisplay]="'input'" [showIcon]="true" />
+            </div>
+            <div class="flex flex-col grow basis-0 gap-2">
+               <label for="periodo_fin" class="font-bold">Periodo final</label>
+               <p-datepicker inputId="periodo_fin" name="periodo_fin" [(ngModel)]="contract.periodo_fin" [showTime]="true" hourFormat="12" [iconDisplay]="'input'" [showIcon]="true" />
+            </div>
+         </div>
+         <div class="flex flex-col grow basis-0 gap-2">
+            <label for="importe_alquiler" class="font-bold">Importe de alquiler</label>
+            <input pInputText id="importe_alquiler" name="importe_alquiler" type="number" [(ngModel)]="contract.importe_alquiler" required/>
+         </div>
+         <div class="flex flex-wrap gap-5">
+            <div class="flex flex-col grow basis-0 gap-2">
+               <label for="importe_agua" class="font-bold">Monto de agua</label>
+               <input pInputText id="importe_agua" name="importe_agua" type="number" [(ngModel)]="contract.importe_agua" required/>
+            </div>
+            <div class="flex flex-col grow basis-0 gap-2">
+               <label for="importe_luz" class="font-bold">Monto de luz</label>
+               <input pInputText id="importe_luz" name="importe_luz" type="number" [(ngModel)]="contract.importe_luz" required/>
+            </div>
+         </div>
+         <div class="flex flex-col grow basis-0 gap-2">
+            <label for="fecha_limite_pago" class="font-bold">Fecha limite de pago</label>
+            <p-datepicker inputId="fecha_limite_pago" name="fecha_limite_pago" [(ngModel)]="contract.fecha_limite_pago" [iconDisplay]="'input'" [showIcon]="true" />
+         </div>
+         <div class="flex flex-col grow basis-0 gap-2">
+            <label for="comprobante_pago" class="font-bold">Comprobante de pago</label>
+            <input pInputText id="comprobante_pago" name="comprobante_pago" [(ngModel)]="contract.comprobante_pago" type="text" required/>
+         </div>
+         <div class="flex flex-col grow basis-0 gap-2">
+            <label for="fecha_comprobante" class="font-bold">Fecha de comprobante</label>
+            <p-datepicker inputId="fecha_comprobante" name="fecha_comprobante" [(ngModel)]="contract.fecha_comprobante" [iconDisplay]="'input'" [showIcon]="true" />
+         </div>
+         <div class="flex flex-col grow basis-0 gap-2">
+            <label for="orden_pago" class="font-bold">Orden de pago</label>
+            <input pInputText id="orden_pago" name="orden_pago" [(ngModel)]="contract.orden_pago" type="text" required/>
+         </div>
+         <div class="flex flex-col grow basis-0 gap-2">
+            <label for="fecha_orden" class="font-bold">Fecha de orden</label>
+            <p-datepicker inputId="fecha_orden" name="fecha_orden" [(ngModel)]="contract.fecha_orden" [iconDisplay]="'input'" [showIcon]="true" />
+         </div>
+      </div>
+   </div>
+   <div class="flex items-center justify-end gap-4 mt-12">
+      <p-button label="Cancelar" type="button" class="w-30" severity="secondary" styleClass="w-full" outlined (onClick)="cancelContract(contractForm)"></p-button>
+      <p-button label="Agregar" type="submit" class="w-30" severity="success" styleClass="w-full" outlined ></p-button>
+   </div>
+</form>

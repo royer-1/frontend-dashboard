@@ -1,0 +1,54 @@
+<div class="w-full h-full" *ngIf="user">
+   <div class="flex flex-col gap-6">
+      <div class="flex flex-col grow basis-0 gap-2">
+      <label for="dimension" class="block font-bold mb-2">Nombre</label>
+      <input type="text" id="nombre" pInputText [(ngModel)]="user.nombre" disabled/>
+   </div>
+   <div class="flex flex-row justify-between gap-5">
+      <div class="flex flex-col w-full">
+         <label for="precio" class="block font-bold mb-2">Tipo de documento</label>
+         <input type="text" id="ciudad" pInputText [(ngModel)]="user.tipo_doc" disabled />
+      </div>
+      <div class="flex flex-col w-full">
+         <label for="tiempo" class="block font-bold mb-2">Documento</label>
+         <input type="text" id="ciudad" pInputText [(ngModel)]="user.documento" disabled />
+      </div>
+   </div>
+   <div class="flex flex-col grow basis-0 gap-2">
+      <label for="dimension" class="block font-bold mb-2">Correo electrónico</label>
+      <input type="text" id="nombre" pInputText [(ngModel)]="user.correo" autofocus required />
+   </div>
+   <div class="flex flex-col grow basis-0 gap-2">
+      <label for="dimension" class="block font-bold mb-2">Telefono</label>
+      <input type="text" id="nombre" pInputText [(ngModel)]="user.telefono" required/>
+   </div>
+   <div class="flex flex-col grow basis-0 gap-2">
+      <label for="dimension" class="block font-bold mb-2">Dirección</label>
+      <input type="text" id="nombre" pInputText [(ngModel)]="user.direccion" required />
+   </div>
+   <div class="flex flex-col grow basis-0 gap-2">
+      <label for="dimension" class="block font-bold mb-2">Rol de usuario</label>
+      <p-select 
+      [(ngModel)]="user.rol_user" 
+      [options]="roles" 
+      optionLabel="label"
+      optionValue="value"
+      placeholder="Rol de usuario" 
+      required/>
+   </div>
+   <div class="flex flex-row justify-between gap-5">
+      <div class="flex flex-col w-full">
+         <label for="precio" class="block font-bold mb-2">Usuario</label>
+         <input type="text" id="ciudad" pInputText [(ngModel)]="user.usuario" required/>
+      </div>
+      <div class="flex flex-col w-full">
+         <label for="tiempo" class="block font-bold mb-2">Contraseña</label>
+         <input type="text" id="ciudad" pInputText [(ngModel)]="user.password" required/>
+      </div>
+   </div>
+   <div class="flex items-center justify-end gap-4 mt-6">
+        <p-button label="Cancelar" type="button" severity="danger" icon="pi pi-times" (onClick)="cancel()" outlined/>
+        <p-button label="Guardar" type="submit" severity="success" icon="pi pi-check"  outlined/>
+   </div>
+</div>
+

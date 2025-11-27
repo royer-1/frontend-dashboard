@@ -1,0 +1,62 @@
+<form #userform="ngForm" (ngSubmit)="addUser()" class="flex flex-col gap-6">
+   <div class="flex flex-col grow basis-0 gap-2">
+      <label for="nombre" class="font-bold">Nombre</label>
+      <input type="text" pInputText id="nombre" name="nombre" [(ngModel)]="user.nombre" required autofocus fluid />
+   </div>
+   <div class="flex flex-wrap gap-5">
+      <div class="flex flex-col grow basis-0 gap-2">
+         <label for="tipo_documento" class="font-bold">Tipo de Documento</label>
+         <p-select 
+            id="tipo_documento" 
+            name="tipo_documento" 
+            [(ngModel)]="user.tipo_doc"
+            [options]="tipo_docs" 
+            optionLabel="label" 
+            optionValue="value" 
+            placeholder="Tipo de Documento" 
+         />
+      </div>
+      <div class="flex flex-col grow basis-0 gap-2">
+         <label for="documento" class="font-bold">Documento</label>
+         <input pInputText id="documento" name="documento" [(ngModel)]="user.documento" type="text" required/>
+      </div>
+   </div>
+   <div class="flex flex-col grow basis-0 gap-2">
+      <label for="telefono" class="font-bold">Telefono</label>
+      <input type="text" pInputText id="telefono" name="telefono" [(ngModel)]="user.telefono" required autofocus fluid />
+   </div>
+   <div class="flex flex-col grow basis-0 gap-2">
+      <label for="correo" class="font-bold">Correo</label>
+      <input type="text" pInputText id="correo" name="correo" [(ngModel)]="user.correo" required autofocus fluid />
+   </div>
+   <div class="flex flex-col grow basis-0 gap-2">
+      <label for="direccion" class="font-bold">Dirección</label>
+      <input type="text" pInputText id="direccion" name="direccion" [(ngModel)]="user.direccion" required autofocus fluid />
+   </div>
+   <div class="flex flex-col grow basis-0 gap-2">
+      <label for="rol_user" class="font-bold">Rol de usuario</label>
+      <p-select 
+         id="rol_user" 
+         name="rol_user" 
+         [(ngModel)]="user.rol_user"
+         [options]="rol_users" 
+         optionLabel="label" 
+         optionValue="value" 
+         placeholder="Rol de usuario" 
+      />
+   </div>
+   <div class="flex flex-wrap gap-5">
+      <div class="flex flex-col grow basis-0 gap-2">
+         <label for="usuario" class="font-bold">Usuario</label>
+         <input pInputText id="usuario" type="usuario" name="latitud" [(ngModel)]="user.usuario" required/>
+      </div>
+      <div class="flex flex-col grow basis-0 gap-2">
+         <label for="contrasena" class="font-bold">Contraseña</label>
+         <input pInputText id="contrasena" type="contrasena" name="longitud" [(ngModel)]="user.password" required/>
+      </div>
+   </div>
+   <div class="flex items-center justify-end gap-4 mt-6">
+      <p-button label="Cancelar" type="button" class="w-30" severity="secondary" styleClass="w-full" outlined (onClick)="cancel(userform)" ></p-button>
+      <p-button label="Agregar" type="submit" class="w-30" severity="success" styleClass="w-full" outlined ></p-button>
+   </div>
+</form>

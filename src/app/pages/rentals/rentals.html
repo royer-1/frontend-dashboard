@@ -4,14 +4,14 @@
    <p-table
       #dt
       [value]="rental"
-      [rows]="10"
-      
-      [paginator]="true"
-      [globalFilterFields]="['nombre', 'apellidos', 'nombre_auditorio', 'orden_pago']"
       [(selection)]="selectedRentals"
+      dataKey="IdRentals"
+      [columns]="cols"
+      [paginator]="true"
+      [rows]="10"
+      [globalFilterFields]="['nombre', 'apellidos', 'nombre_auditorio', 'orden_pago']"
       [showGridlines]="true"
       [rowHover]="true"
-      dataKey="id"
       currentPageReportTemplate="Mostrando del {first} al {last} de {totalRecords} Alquileres"
       [showCurrentPageReport]="true"
       [rowsPerPageOptions]="[10, 20, 30]"
@@ -22,14 +22,14 @@
             <p-toolbar class="toolbar">
                <ng-template #start>
                   <p-button label="Nuevo" icon="pi pi-plus" severity="secondary" class="mr-2" (onClick)="addRentals()" />
-                  <p-dialog header="Agregar Alquileres" [modal]="true" [(visible)]="visible" [style]="{ width: '500px' } " [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" >
-                     <app-addrentals></app-addrentals>
+                  <p-dialog header="Agregar Alquileres" [modal]="true" [(visible)]="visibleAddRental" [style]="{ width: '500px' } " [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }" >
+                     <app-addrentals (rentalAdded)="rentalAdded($event)" (onCancel)="visibleAddRental=false"></app-addrentals>
                   </p-dialog>
-                  <p-button severity="secondary" label="Borrar" icon="pi pi-trash" class="mr-2"  outlined (onClick)="deleteSelectedRentals()" />
-                  <app-export-csv></app-export-csv>
+                  <p-button severity="secondary" label="Borrar" icon="pi pi-trash" class="mr-2"  outlined (onClick)="deleteSelectedRentals()" [disabled]="!selectedRentals || !selectedRentals.length" />
+                  <app-export-xlsx [table]="dt"></app-export-xlsx>
                </ng-template>
             </p-toolbar>
-            <app-table-search-bar-component></app-table-search-bar-component>
+            <app-table-search-bar-component [table]="dt"></app-table-search-bar-component>
          </div>
       </ng-template>
 
@@ -82,7 +82,7 @@
             </th>
             <th style="min-width: 12rem">
                <div class="flex justify-between items-center">
-                  Fceha de Comprobante
+                  Fecha de Comprobante
                   <p-columnFilter type="text" field="fecha_comprobante" matchMode="contains" [showMatchModes]="false" [showOperator]="false" [showAddButton]="false" display="menu" placeholder="Buscar por fecha comprobante"></p-columnFilter>
                </div>
             </th>
@@ -116,25 +116,25 @@
                {{ rental.nombre_auditorio }}
             </td>
             <td>
-               {{ rental.fecha_inicio }}
+               {{ rental.fecha_inicio | date }}
             </td>
             <td>
-               {{ rental.fecha_final }}
+               {{ rental.fecha_final | date }}
             </td>
             <td>
-               {{ rental.importe_pago }}
+               {{ rental.importe_pago | currency }}
             </td>
             <td>
                {{ rental.comprobante_pago }}
             </td>
             <td>
-               {{ rental.fecha_comprobante }}
+               {{ rental.fecha_comprobante | date }}
             </td>
             <td>
                {{ rental.orden_pago }}
             </td>
             <td>
-               {{ rental.fecha_orden }}
+               {{ rental.fecha_orden | date }}
             </td>
             <td class="flex flex-row justify-center gap-2">
                <p-button icon="pi pi-pencil" [rounded]="true" [outlined]="true" />
@@ -143,5 +143,6 @@
          </tr>
       </ng-template>
    </p-table>
+   <p-confirmdialog [style]="{ width: '450px' }" />
 </div>
    

@@ -1,9 +1,9 @@
 <div class="flex items-center gap-3">
-   <button pButton label="Limpiar" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt)"></button>
+   <button pButton label="Limpiar" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear()"></button>
    <p-iconfield iconPosition="left" class="ml-auto">
       <p-inputicon>
          <i class="pi pi-search"></i>
       </p-inputicon>
-      <input type="text" pInputText (input)="onGlobalFilter(dt, $event)" placeholder="Buscar ..." />
+      <input type="text" pInputText (input)="onGlobalFilter($event)" placeholder="Buscar ..." />
    </p-iconfield>
 </div>

@@ -1,0 +1,6 @@
+.custom-toggle {
+  background-color: transparent !important; /* quita fondo */
+  border: 1px solid var(--p-inputtext-border-color) !important;    /* borde azul (ajusta color) */
+  box-shadow: none !important;              /* quita sombra si hay */
+  color: #5c5c5c !important;                /* color texto */
+}
